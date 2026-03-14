@@ -1,4 +1,4 @@
-﻿namespace AvaloniaUIShell.Common;
+﻿namespace GliderUI.Common;
 
 public static class RpcValueConverter
 {
@@ -128,13 +128,13 @@ public static class RpcValueConverter
     private static Type? GetInterfaceImplType(Type interfaceType)
     {
         // Get interface Impl type fullname from interface type fullname.
-        // fullName has a format like "AvaloniaUIShell.Namespace.Class`1+InnerClass+InnerMost`2[[AvaloniaUIShell.Namespace.GenericArgumentClass, AvaloniaUIShell, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]".
+        // fullName has a format like "GliderUI.Namespace.Class`1+InnerClass+InnerMost`2[[GliderUI.Namespace.GenericArgumentClass, GliderUI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]".
         var fullName = interfaceType.FullName!;
 
-        // System interface types don't have "AvaloniaUIShell" namespace. Add it here as Impl classes are always under AvaloniaUIShell namespace.
-        if (!fullName.StartsWith("AvaloniaUIShell.", StringComparison.Ordinal))
+        // System interface types don't have "GliderUI" namespace. Add it here as Impl classes are always under GliderUI namespace.
+        if (!fullName.StartsWith("GliderUI.", StringComparison.Ordinal))
         {
-            fullName = "AvaloniaUIShell." + fullName;
+            fullName = "GliderUI." + fullName;
         }
 
         int insertIndex = fullName.Length;
@@ -158,7 +158,7 @@ public static class RpcValueConverter
             insertIndex = lastGenericTypeSeparator;
         }
 
-        string implTypeFullName = $"{fullName.Insert(insertIndex, "_Impl")}, AvaloniaUIShell";
+        string implTypeFullName = $"{fullName.Insert(insertIndex, "_Impl")}, GliderUI";
         return Type.GetType(implTypeFullName);
     }
 

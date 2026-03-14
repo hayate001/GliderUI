@@ -2,11 +2,11 @@
   "profiles": {
     "Generator(Common)": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\AvaloniaUIShell.Common\\AvaloniaUIShell.Common.csproj"
+      "targetProject": "..\\GliderUI.Common\\GliderUI.Common.csproj"
     },
-    "Generator(AvaloniaUIShell)": {
+    "Generator(GliderUI)": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\AvaloniaUIShell\\AvaloniaUIShell.csproj"
+      "targetProject": "..\\GliderUI\\GliderUI.csproj"
     }
   }
 }

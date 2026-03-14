@@ -1,6 +1,6 @@
-﻿using AvaloniaUIShell.ApiExporter;
+﻿using GliderUI.ApiExporter;
 
-namespace AvaloniaUIShell.Generator;
+namespace GliderUI.Generator;
 
 internal class EventDef
 {
@@ -201,7 +201,7 @@ internal class EventDef
                 {{signatureExpression}}
                 {
                     {{GetEventCallbackListFieldName(_memberDefType)}}.Add(
-                        AvaloniaUIShellObjectId,
+                        GliderUIObjectId,
                         "{{GetEventName()}}",
                         ObjectTypeMapping.Get().GetTargetTypeName(typeof({{GetEventArgsTypeName(genericTypeParametersOverride)}})),
                         eventCallback);

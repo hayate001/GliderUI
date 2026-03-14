@@ -3,7 +3,7 @@ using System.IO.Pipes;
 using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
 
-namespace AvaloniaUIShell.Common;
+namespace GliderUI.Common;
 
 public class CommandServer : Singleton<CommandServer>
 {

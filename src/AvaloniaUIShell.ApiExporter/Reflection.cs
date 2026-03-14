@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace AvaloniaUIShell.ApiExporter;
+namespace GliderUI.ApiExporter;
 
 internal static class Reflection
 {

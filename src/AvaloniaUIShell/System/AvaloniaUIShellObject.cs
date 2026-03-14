@@ -1,13 +1,13 @@
-﻿using AvaloniaUIShell.Common;
+﻿using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
-public sealed class AvaloniaUIShellObject : IAvaloniaUIShellObject
+public sealed class GliderUIObject : IGliderUIObject
 {
-    public ObjectId AvaloniaUIShellObjectId { get; } = new();
+    public ObjectId GliderUIObjectId { get; } = new();
 
-    internal AvaloniaUIShellObject(ObjectId id)
+    internal GliderUIObject(ObjectId id)
     {
-        AvaloniaUIShellObjectId = id;
+        GliderUIObjectId = id;
     }
 }

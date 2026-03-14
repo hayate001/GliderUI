@@ -5,7 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AvaloniaUIShell.ApiExporter;
+namespace GliderUI.ApiExporter;
 
 internal sealed class Exporter
 {
@@ -771,7 +771,7 @@ internal sealed class Exporter
     {
         var assembly = type.Assembly;
         var assemblyName = assembly.GetName().Name;
-        assemblyName = assemblyName!.Replace("AvaloniaUIShell.ApiExporter", "AvaloniaUIShell.Server", StringComparison.Ordinal);
+        assemblyName = assemblyName!.Replace("GliderUI.ApiExporter", "GliderUI.Server", StringComparison.Ordinal);
 
         return $"{type.FullName}, {assemblyName}";
     }

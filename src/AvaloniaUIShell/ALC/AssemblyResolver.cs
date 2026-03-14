@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 public class AssemblyResolver : IModuleAssemblyInitializer, IModuleAssemblyCleanup
 {
@@ -36,7 +36,7 @@ public class AssemblyResolver : IModuleAssemblyInitializer, IModuleAssemblyClean
         {
             return null;
         }
-        if (!assemblyToResolve.Name.Equals("AvaloniaUIShell.Common", StringComparison.Ordinal))
+        if (!assemblyToResolve.Name.Equals("GliderUI.Common", StringComparison.Ordinal))
         {
             return null;
         }

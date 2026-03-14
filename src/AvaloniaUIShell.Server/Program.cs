@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace AvaloniaUIShell.Server;
+namespace GliderUI.Server;
 
 internal sealed class Program
 {

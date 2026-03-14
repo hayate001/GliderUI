@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace AvaloniaUIShell.ApiExporter;
+namespace GliderUI.ApiExporter;
 
 #pragma warning disable CA1515 // Consider making public types internal
 public class Api

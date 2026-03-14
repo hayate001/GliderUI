@@ -1,4 +1,4 @@
-﻿namespace AvaloniaUIShell.Common;
+﻿namespace GliderUI.Common;
 
 public abstract class Singleton<T> where T : class, new()
 {

@@ -1,4 +1,4 @@
-﻿namespace AvaloniaUIShell.ApiExporter;
+﻿namespace GliderUI.ApiExporter;
 
 internal sealed class Program
 {

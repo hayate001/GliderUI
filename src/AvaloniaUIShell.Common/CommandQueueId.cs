@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics;
 
-namespace AvaloniaUIShell.Common;
+namespace GliderUI.Common;
 
 public enum CommandQueueType
 {

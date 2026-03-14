@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 public class EventCallback
 {
@@ -43,7 +43,7 @@ public class EventCallback
         ObjectId[] ids = new ObjectId[DisabledControlsWhileProcessing.Length];
         for (int i = 0; i < DisabledControlsWhileProcessing.Length; ++i)
         {
-            ids[i] = DisabledControlsWhileProcessing[i].AvaloniaUIShellObjectId;
+            ids[i] = DisabledControlsWhileProcessing[i].GliderUIObjectId;
         }
         return ids;
     }

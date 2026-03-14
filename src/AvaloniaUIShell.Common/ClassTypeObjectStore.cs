@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace AvaloniaUIShell.Common;
+namespace GliderUI.Common;
 
 internal sealed class ClassTypeObjectStore
 {

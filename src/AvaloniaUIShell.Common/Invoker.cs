@@ -1,7 +1,7 @@
 ﻿
 using System.Reflection;
 
-namespace AvaloniaUIShell.Common;
+namespace GliderUI.Common;
 
 public class Invoker : Singleton<Invoker>
 {

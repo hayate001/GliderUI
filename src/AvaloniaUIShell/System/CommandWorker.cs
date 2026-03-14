@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Management.Automation.Runspaces;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 internal sealed class CommandWorker
 {

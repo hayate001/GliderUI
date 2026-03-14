@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using AvaloniaUIShell.ApiExporter;
+using GliderUI.ApiExporter;
 
-namespace AvaloniaUIShell.Generator;
+namespace GliderUI.Generator;
 
 internal class ParameterDef
 {

@@ -5,7 +5,7 @@ using System.Security.Principal;
 using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
 
-namespace AvaloniaUIShell.Common;
+namespace GliderUI.Common;
 
 public class CommandClient : Singleton<CommandClient>
 {

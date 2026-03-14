@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell.Server;
+namespace GliderUI.Server;
 
 internal static class WindowAccessor
 {

@@ -1,6 +1,6 @@
-﻿using AvaloniaUIShell.Common;
+﻿using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 internal static class PropertyAccessor
 {

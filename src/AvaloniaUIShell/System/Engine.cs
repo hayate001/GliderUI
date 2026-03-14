@@ -2,9 +2,9 @@
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Management.Automation.Runspaces;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 public class Engine
 {
@@ -97,8 +97,8 @@ public class Engine
     private void InitPipeNames()
     {
         var processId = Environment.ProcessId.ToString();
-        _upstreamPipeName = $"AvaloniaUIShell.ClientToServer.{processId}";
-        _downstreamPipeName = $"AvaloniaUIShell.ServerToClient.{processId}";
+        _upstreamPipeName = $"GliderUI.ClientToServer.{processId}";
+        _downstreamPipeName = $"GliderUI.ServerToClient.{processId}";
     }
 
     private void StartServerProcess(string path)
@@ -149,7 +149,7 @@ public class Engine
         };
 
         ScriptBlock action = ScriptBlock.Create(@"
-[AvaloniaUIShell.Engine]::Get().IdleUpdateRunspace()
+[GliderUI.Engine]::Get().IdleUpdateRunspace()
 $engineUpdateTimer = $Sender
 $engineUpdateTimer.Start()
 "

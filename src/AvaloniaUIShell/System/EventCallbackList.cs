@@ -1,17 +1,17 @@
 ﻿using System.Management.Automation.Runspaces;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
-internal sealed class EventCallbackList : IAvaloniaUIShellObject
+internal sealed class EventCallbackList : IGliderUIObject
 {
     private readonly List<EventCallback> _callbacks = [];
-    public ObjectId AvaloniaUIShellObjectId { get; } = new();
+    public ObjectId GliderUIObjectId { get; } = new();
 
     public EventCallbackList()
     {
         _ = ObjectStore.Get().RegisterObject(this, out ObjectId id);
-        AvaloniaUIShellObjectId = id;
+        GliderUIObjectId = id;
     }
 
     public void Add(
@@ -35,14 +35,14 @@ internal sealed class EventCallbackList : IAvaloniaUIShellObject
         ObjectId[]? disabledControlIds = copiedEventCallback.GetDisabledControlIds();
 
         CommandClient.Get().InvokeStaticMethod(
-            "AvaloniaUIShell.Server.EventCallback, AvaloniaUIShell.Server",
+            "GliderUI.Server.EventCallback, GliderUI.Server",
             "Add",
             targetObjectId,
             eventName,
             eventArgsTypeName,
             copiedEventCallback.RunspaceMode,
             Runspace.DefaultRunspace.Id,
-            AvaloniaUIShellObjectId.Id,
+            GliderUIObjectId.Id,
             eventId,
             disabledControlIds);
     }
@@ -68,14 +68,14 @@ internal sealed class EventCallbackList : IAvaloniaUIShellObject
         ObjectId[]? disabledControlIds = copiedEventCallback.GetDisabledControlIds();
 
         CommandClient.Get().InvokeStaticMethod(
-            "AvaloniaUIShell.Server.EventCallback, AvaloniaUIShell.Server",
+            "GliderUI.Server.EventCallback, GliderUI.Server",
             "AddStatic",
             className,
             eventName,
             eventArgsTypeName,
             copiedEventCallback.RunspaceMode,
             Runspace.DefaultRunspace.Id,
-            AvaloniaUIShellObjectId.Id,
+            GliderUIObjectId.Id,
             eventId,
             disabledControlIds);
     }

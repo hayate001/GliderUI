@@ -1,4 +1,4 @@
-﻿namespace AvaloniaUIShell.Generator;
+﻿namespace GliderUI.Generator;
 
 internal class SpecializedMethodGenerator
 {

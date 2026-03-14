@@ -1,8 +1,8 @@
-﻿using AvaloniaUIShell.Common;
+﻿using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
-public interface IAvaloniaUIShellObject
+public interface IGliderUIObject
 {
-    ObjectId AvaloniaUIShellObjectId { get; }
+    ObjectId GliderUIObjectId { get; }
 }

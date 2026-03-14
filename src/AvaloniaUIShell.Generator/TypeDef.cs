@@ -1,6 +1,6 @@
-﻿using AvaloniaUIShell.ApiExporter;
+﻿using GliderUI.ApiExporter;
 
-namespace AvaloniaUIShell.Generator;
+namespace GliderUI.Generator;
 
 internal class TypeDef
 {
@@ -71,11 +71,11 @@ internal class TypeDef
         else if (Api.IsSupportedGlobalSystemInterface(originalTypeName))
         {
             IsGlobalSystemInterface = true;
-            _name = $"AvaloniaUIShell.{originalTypeName}";
+            _name = $"GliderUI.{originalTypeName}";
         }
-        else if (originalTypeName.StartsWith("AvaloniaUIShell.Server"))
+        else if (originalTypeName.StartsWith("GliderUI.Server"))
         {
-            _name = originalTypeName.Replace("AvaloniaUIShell.Server", "AvaloniaUIShell");
+            _name = originalTypeName.Replace("GliderUI.Server", "GliderUI");
         }
         else if (originalTypeName == "System.Object")
         {
@@ -95,7 +95,7 @@ internal class TypeDef
         }
         else
         {
-            _name = $"AvaloniaUIShell.{originalTypeName}";
+            _name = $"GliderUI.{originalTypeName}";
         }
 
         if (elementTypeOverride is not null)
@@ -399,11 +399,11 @@ internal class TypeDef
         }
         else if (IsObject || IsGenericParameter())
         {
-            return "(value is IAvaloniaUIShellObject v ? v.AvaloniaUIShellObjectId : value)";
+            return "(value is IGliderUIObject v ? v.GliderUIObjectId : value)";
         }
         else
         {
-            return "value?.AvaloniaUIShellObjectId";
+            return "value?.GliderUIObjectId";
         }
     }
 
@@ -419,11 +419,11 @@ internal class TypeDef
         }
         else if (IsObject || IsGenericParameter())
         {
-            return $"({variableName} is IAvaloniaUIShellObject v{variableIndex} ? v{variableIndex}.AvaloniaUIShellObjectId : {variableName})";
+            return $"({variableName} is IGliderUIObject v{variableIndex} ? v{variableIndex}.GliderUIObjectId : {variableName})";
         }
         else
         {
-            return $"{variableName}?.AvaloniaUIShellObjectId";
+            return $"{variableName}?.GliderUIObjectId";
         }
     }
 }

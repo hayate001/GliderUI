@@ -13,11 +13,11 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
 
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <AvaloniaUIShellGenerator_GenerateTypeMapping>true</AvaloniaUIShellGenerator_GenerateTypeMapping>
+    <GliderUIGenerator_GenerateTypeMapping>true</GliderUIGenerator_GenerateTypeMapping>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AvaloniaUIShell.Generator\AvaloniaUIShell.Generator.csproj">
+    <ProjectReference Include="..\GliderUI.Generator\GliderUI.Generator.csproj">
       <OutputItemType>Analyzer</OutputItemType>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <CompilerVisibleProperty Include="AvaloniaUIShellGenerator_GenerateTypeMapping" />
-    <AdditionalFiles Include="..\AvaloniaUIShell.ApiExporter\Api.xml" />
+    <CompilerVisibleProperty Include="GliderUIGenerator_GenerateTypeMapping" />
+    <AdditionalFiles Include="..\GliderUI.ApiExporter\Api.xml" />
   </ItemGroup>
 </Project>

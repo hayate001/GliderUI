@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 internal sealed class CustomAssemblyLoadContext : AssemblyLoadContext
 {

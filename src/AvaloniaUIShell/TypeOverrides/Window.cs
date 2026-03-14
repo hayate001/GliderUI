@@ -1,12 +1,12 @@
 ﻿using System.Management.Automation;
-using AvaloniaUIShell.Common;
-using AvaloniaUIShell.Generator;
+using GliderUI.Common;
+using GliderUI.Generator;
 
-namespace AvaloniaUIShell.Avalonia.Controls;
+namespace GliderUI.Avalonia.Controls;
 
-public partial class Window : IAvaloniaUIShellObject
+public partial class Window : IGliderUIObject
 {
-    private const string _accessorClassName = "AvaloniaUIShell.Server.WindowAccessor, AvaloniaUIShell.Server";
+    private const string _accessorClassName = "GliderUI.Server.WindowAccessor, GliderUI.Server";
     private readonly EventCallbackList _closedCallbacks = new();
     private bool _isShowCalled;
     private bool _isCloseCalled;
@@ -23,17 +23,17 @@ public partial class Window : IAvaloniaUIShellObject
     public Window()
         : base(ObjectId.Null)
     {
-        AvaloniaUIShellObjectId = CommandClient.Get().CreateObject(
+        GliderUIObjectId = CommandClient.Get().CreateObject(
             ObjectTypeMapping.Get().GetTargetTypeName(typeof(Window)),
             this);
 
-        CommandClient.Get().InvokeStaticMethod(_accessorClassName, "RegisterWindow", AvaloniaUIShellObjectId);
+        CommandClient.Get().InvokeStaticMethod(_accessorClassName, "RegisterWindow", GliderUIObjectId);
     }
 
     internal Window(ObjectId id)
         : base(id)
     {
-        CommandClient.Get().InvokeStaticMethod(_accessorClassName, "RegisterWindow", AvaloniaUIShellObjectId);
+        CommandClient.Get().InvokeStaticMethod(_accessorClassName, "RegisterWindow", GliderUIObjectId);
     }
 
     [SurpressGeneratorMethodByName]
@@ -44,7 +44,7 @@ public partial class Window : IAvaloniaUIShellObject
 
         _isShowCalled = true;
         IsClosed = false;
-        CommandClient.Get().InvokeMethod(AvaloniaUIShellObjectId, null, nameof(Show));
+        CommandClient.Get().InvokeMethod(GliderUIObjectId, null, nameof(Show));
     }
 
     [SurpressGeneratorMethodByName]
@@ -59,7 +59,7 @@ public partial class Window : IAvaloniaUIShellObject
     public new void AddClosed(EventCallback eventCallback)
     {
         _closedCallbacks.Add(
-            AvaloniaUIShellObjectId,
+            GliderUIObjectId,
             "Closed",
             ObjectTypeMapping.Get().GetTargetTypeName(typeof(System.EventArgs)),
             eventCallback);
@@ -72,7 +72,7 @@ public partial class Window : IAvaloniaUIShellObject
             return;
 
         _isCloseCalled = true;
-        CommandClient.Get().InvokeMethod(AvaloniaUIShellObjectId, null, nameof(Close));
+        CommandClient.Get().InvokeMethod(GliderUIObjectId, null, nameof(Close));
     }
 
     public void WaitForClosed()

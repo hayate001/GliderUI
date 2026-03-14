@@ -1,4 +1,4 @@
-﻿namespace AvaloniaUIShell.Common;
+﻿namespace GliderUI.Common;
 
 internal sealed class ValueTypeObjectStore
 {

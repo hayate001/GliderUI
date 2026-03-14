@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell.Server;
+namespace GliderUI.Server;
 
 internal sealed class WindowStore : Singleton<WindowStore>
 {

@@ -3,9 +3,9 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell.Server;
+namespace GliderUI.Server;
 
 internal sealed partial class App : Application
 {

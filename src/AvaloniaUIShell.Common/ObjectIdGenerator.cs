@@ -1,6 +1,6 @@
 ﻿
 
-namespace AvaloniaUIShell.Common;
+namespace GliderUI.Common;
 
 public class ObjectIdGenerator : Singleton<ObjectIdGenerator>
 {

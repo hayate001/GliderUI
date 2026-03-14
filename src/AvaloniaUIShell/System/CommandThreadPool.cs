@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
 using System.Management.Automation.Host;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 internal sealed class CommandThreadPool
 {

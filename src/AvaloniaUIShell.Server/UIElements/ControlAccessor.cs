@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-namespace AvaloniaUIShell.Server;
+namespace GliderUI.Server;
 
 internal static class ControlAccessor
 {

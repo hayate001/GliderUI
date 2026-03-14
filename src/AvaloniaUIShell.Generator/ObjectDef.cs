@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using AvaloniaUIShell.ApiExporter;
+using GliderUI.ApiExporter;
 
-namespace AvaloniaUIShell.Generator;
+namespace GliderUI.Generator;
 
 internal class ObjectDef
 {
@@ -274,7 +274,7 @@ internal class ObjectDef
     public string GetSourceCodeFileName()
     {
         var fullName = _apiObjectDef.FullName.Split(',')[0];
-        return $"AvaloniaUIShell.{fullName}.g.cs";
+        return $"GliderUI.{fullName}.g.cs";
     }
 
     public string Generate()
@@ -287,8 +287,8 @@ internal class ObjectDef
             #nullable enable
 
             using System.Management.Automation;
-            using AvaloniaUIShell;
-            using AvaloniaUIShell.Common;
+            using GliderUI;
+            using GliderUI.Common;
 
             namespace {{ns}};
 
@@ -333,7 +333,7 @@ internal class ObjectDef
 
         if (baseTypeExpression.Length == 0)
         {
-            _ = baseTypeExpression.Append($" : IAvaloniaUIShellObject");
+            _ = baseTypeExpression.Append($" : IGliderUIObject");
         }
 
         if (Type.IsGlobalSystemInterface)
@@ -521,7 +521,7 @@ internal class ObjectDef
 
         if (baseTypeExpression.Length == 0 && !isStatic)
         {
-            _ = baseTypeExpression.Append($" : IAvaloniaUIShellObject");
+            _ = baseTypeExpression.Append($" : IGliderUIObject");
         }
 
         codeWriter.Append($$"""
@@ -542,7 +542,7 @@ internal class ObjectDef
         if (!hasBaseType && !isStatic)
         {
             codeWriter.AppendAndReserveNewLine($$"""
-                public ObjectId AvaloniaUIShellObjectId { get; protected set; } = new();
+                public ObjectId GliderUIObjectId { get; protected set; } = new();
                 """);
         }
 
@@ -555,7 +555,7 @@ internal class ObjectDef
             codeWriter.AppendAndReserveNewLine($$"""
                 {{method.GetConstructorSignatureExpression(_apiObjectDef.Name)}}{{baseInitializer}}
                 {
-                    AvaloniaUIShellObjectId = CommandClient.Get().CreateObject(
+                    GliderUIObjectId = CommandClient.Get().CreateObject(
                         ObjectTypeMapping.Get().GetTargetTypeName(typeof({{Type.GetName()}})),
                         this{{method.GetArgumentsExpression(genericTypeParametersOverride: null)}});
                 }
@@ -577,7 +577,7 @@ internal class ObjectDef
                 codeWriter.AppendAndReserveNewLine($$"""
                 internal {{_apiObjectDef.Name}}(ObjectId id)
                 {
-                    AvaloniaUIShellObjectId = id;
+                    GliderUIObjectId = id;
                 }
                 """);
             }
@@ -635,7 +635,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         get => PropertyAccessor.GetIndexer<{{property.Type.GetName()}}>(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             {{typeNameExpression}},
                             "{{property.GetOriginalName()}}"{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride: null)}}){{(property.Type.IsNullable ? "" : "!")}};
                         """);
@@ -644,7 +644,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         get => PropertyAccessor.Get<{{property.Type.GetName()}}>(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             {{typeNameExpression}},
                             {{property.GetNameOfExpression()}}){{(property.Type.IsNullable ? "" : "!")}};
                         """);
@@ -658,7 +658,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         set => PropertyAccessor.SetIndexer(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             {{typeNameExpression}},
                             "{{property.GetOriginalName()}}", {{property.Type.GetValueExpression()}}{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride: null)}});
                         """);
@@ -667,7 +667,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         set => PropertyAccessor.Set(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             {{typeNameExpression}},
                             {{property.GetNameOfExpression()}},
                             {{property.Type.GetValueExpression()}});
@@ -729,7 +729,7 @@ internal class ObjectDef
                     {{method.GetSignatureExpression()}}
                     {
                         CommandClient.Get().InvokeMethod(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             {{typeNameExpression}},
                             {{method.GetNameOfExpression()}}{{method.GetArgumentsExpression(genericTypeParametersOverride: null)}});
                     }
@@ -741,7 +741,7 @@ internal class ObjectDef
                     {{method.GetSignatureExpression()}}
                     {
                         return CommandClient.Get().InvokeMethodAndGetResult<{{returnType.GetName()}}>(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             {{typeNameExpression}},
                             {{method.GetNameOfExpression()}}{{method.GetArgumentsExpression(genericTypeParametersOverride: null)}}){{(returnType.IsNullable ? "" : "!")}};
                     }
@@ -797,7 +797,7 @@ internal class ObjectDef
         codeWriter.IncrementIndent();
 
         codeWriter.AppendAndReserveNewLine($$"""
-            public ObjectId AvaloniaUIShellObjectId { get; protected set; } = new();
+            public ObjectId GliderUIObjectId { get; protected set; } = new();
             """);
 
         if (!AttributeGenerator.IsConstructorSurpressed(Type.GetName()))
@@ -805,7 +805,7 @@ internal class ObjectDef
             codeWriter.AppendAndReserveNewLine($$"""
                 internal {{className}}(ObjectId id)
                 {
-                    AvaloniaUIShellObjectId = id;
+                    GliderUIObjectId = id;
                 }
                 """);
         }
@@ -880,7 +880,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         get => PropertyAccessor.GetIndexer<{{propertyType.GetName()}}>(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             null,
                             "{{property.GetOriginalName(isExplicit)}}"{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride)}}){{(propertyType.IsNullable ? "" : "!")}};
                         """);
@@ -889,7 +889,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         get => PropertyAccessor.Get<{{propertyType.GetName()}}>(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             null,
                             {{property.GetNameOfExpression(isExplicit)}}){{(propertyType.IsNullable ? "" : "!")}};
                         """);
@@ -902,7 +902,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         set => PropertyAccessor.SetIndexer(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             null,
                             "{{property.GetOriginalName(isExplicit)}}", {{propertyType.GetValueExpression()}}{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride)}});
                         """);
@@ -911,7 +911,7 @@ internal class ObjectDef
                 {
                     codeWriter.Append($$"""
                         set => PropertyAccessor.Set(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             null,
                             {{property.GetNameOfExpression(isExplicit)}}, {{propertyType.GetValueExpression()}});
                         """);
@@ -978,7 +978,7 @@ internal class ObjectDef
                     {{method.GetInterfaceImplSignatureExpression(isExplicit, genericTypeParametersOverride)}}
                     {
                         CommandClient.Get().InvokeMethod(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             null,
                             {{method.GetNameOfExpression(isExplicit)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}});
                     }
@@ -990,7 +990,7 @@ internal class ObjectDef
                     {{method.GetInterfaceImplSignatureExpression(isExplicit, genericTypeParametersOverride)}}
                     {
                         return CommandClient.Get().InvokeMethodAndGetResult<{{returnType.GetName()}}>(
-                            AvaloniaUIShellObjectId,
+                            GliderUIObjectId,
                             null,
                             {{method.GetNameOfExpression(isExplicit)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}}){{(returnType.IsNullable ? "" : "!")}};
                     }

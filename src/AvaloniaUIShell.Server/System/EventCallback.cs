@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 using Avalonia.Input;
-using AvaloniaUIShell.Common;
+using GliderUI.Common;
 
-namespace AvaloniaUIShell.Server;
+namespace GliderUI.Server;
 
 internal static class EventCallback
 {
@@ -119,10 +119,10 @@ internal static class EventCallback
             var processingQueueId = GetProcessingQueueId(runspaceMode, mainRunspaceId);
 
             Type eventArgsType = typeof(TEventArgs);
-            var eventArgsTypeName = (eventArgsType == typeof(object)) ? "AvaloniaUIShellObject" : eventArgsType.ToString();
+            var eventArgsTypeName = (eventArgsType == typeof(object)) ? "GliderUIObject" : eventArgsType.ToString();
             var eventArgsId = CommandClient.Get().CreateObjectWithId(
                 temporaryQueueId,
-                $"AvaloniaUIShell.{eventArgsTypeName}, AvaloniaUIShell",
+                $"GliderUI.{eventArgsTypeName}, GliderUI",
                 eventArgs);
 
             var invokeTask = CommandClient.Get().InvokeMethodWaitAsync(

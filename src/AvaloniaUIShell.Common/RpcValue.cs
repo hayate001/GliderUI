@@ -1,5 +1,5 @@
 ﻿
-namespace AvaloniaUIShell.Common;
+namespace GliderUI.Common;
 
 public class RpcValue
 {

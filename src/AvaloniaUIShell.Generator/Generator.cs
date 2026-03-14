@@ -1,8 +1,8 @@
 ﻿using System.Xml.Serialization;
-using AvaloniaUIShell.ApiExporter;
+using GliderUI.ApiExporter;
 using Microsoft.CodeAnalysis;
 
-namespace AvaloniaUIShell.Generator;
+namespace GliderUI.Generator;
 
 [Generator(LanguageNames.CSharp)]
 public class Generator : IIncrementalGenerator
@@ -34,7 +34,7 @@ public class Generator : IIncrementalGenerator
                 return;
 
             var configOptionsProvider = providers.Left.Right;
-            if (configOptionsProvider.GlobalOptions.TryGetValue("build_property.AvaloniaUIShellGenerator_GenerateTypeMapping", out var generateTypeMapping))
+            if (configOptionsProvider.GlobalOptions.TryGetValue("build_property.GliderUIGenerator_GenerateTypeMapping", out var generateTypeMapping))
             {
                 EnumGenerator.GenerateTypeMapping(sourceProductionContext, api);
                 ObjectGenerator.GenerateTypeMapping(sourceProductionContext, api);
@@ -62,6 +62,6 @@ public class Generator : IIncrementalGenerator
 
     internal static string GetTargetNamespace(string serverNamespace)
     {
-        return serverNamespace == "AvaloniaUIShell.Server" ? "AvaloniaUIShell" : $"AvaloniaUIShell.{serverNamespace}";
+        return serverNamespace == "GliderUI.Server" ? "GliderUI" : $"GliderUI.{serverNamespace}";
     }
 }

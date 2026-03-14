@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Management.Automation.Runspaces;
 
-namespace AvaloniaUIShell;
+namespace GliderUI;
 
 internal sealed class RunspaceLocal<T>
 {
