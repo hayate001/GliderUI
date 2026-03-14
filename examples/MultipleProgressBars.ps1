@@ -1,11 +1,11 @@
 # See CancelLongRunningEventCallback.ps1 first for basic usage of runspace pool event callbacks.
 
-using namespace AvaloniaUIShell
-using namespace AvaloniaUIShell.Avalonia
-using namespace AvaloniaUIShell.Avalonia.Controls
+using namespace GliderUI
+using namespace GliderUI.Avalonia
+using namespace GliderUI.Avalonia.Controls
 
-if (-not (Get-Module AvaloniaUIShell)) {
-    Import-Module AvaloniaUIShell
+if (-not (Get-Module GliderUI)) {
+    Import-Module GliderUI
 }
 
 
