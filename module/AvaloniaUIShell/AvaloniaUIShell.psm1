@@ -24,8 +24,8 @@ if ($supportedServerRids -notcontains $serverRid) {
     return
 }
 
-$coreDll = "$PSScriptRoot/bin/$coreNetVersion/AvaloniaUIShell.dll"
-$script:serverPath = "$PSScriptRoot/bin/$serverNetVersion/$serverRid/AvaloniaUIShell.Server$serverExtension"
+$coreDll = "$PSScriptRoot/bin/$coreNetVersion/GliderUI.dll"
+$script:serverPath = "$PSScriptRoot/bin/$serverNetVersion/$serverRid/GliderUI.Server$serverExtension"
 
 $publicScripts = @(Get-ChildItem $PSScriptRoot/Public/*.ps1)
 foreach ($private:script in $publicScripts) {
@@ -43,8 +43,8 @@ if (-not $IsWindows) {
 Import-Module $coreDll
 
 $modulePath = $MyInvocation.MyCommand.Path
-[AvaloniaUIShell.Engine]::Get().InitRunspace($serverPath, $host, $modulePath, $UseTimerEvent)
+[GliderUI.Engine]::Get().InitRunspace($serverPath, $host, $modulePath, $UseTimerEvent)
 
 $MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
-    [AvaloniaUIShell.Engine]::Get().TermRunspace()
+    [GliderUI.Engine]::Get().TermRunspace()
 }

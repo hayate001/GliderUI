@@ -1,16 +1,16 @@
 @{
 
     # Script module or binary module file associated with this manifest.
-    RootModule = 'AvaloniaUIShell.psm1'
+    RootModule = 'GliderUI.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.0.2'
+    ModuleVersion = '0.0.1'
 
     # Supported PSEditions
     CompatiblePSEditions = 'Core'
 
     # ID used to uniquely identify this module
-    GUID = '6a2d2c4f-be46-44ea-9792-3aa463340644'
+    GUID = 'b46a30c6-ccfc-494e-9e1e-ef2d6c254358'
 
     # Author of this module
     Author = 'mdgrs-mei'
@@ -22,7 +22,7 @@
     Copyright = '(c) mdgrs-mei. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'Cross-platform Desktop GUI framework for PowerShell powered by Avalonia UI'
+    Description = 'Cross-platform Desktop GUI framework for PowerShell powered by Avalonia'
 
     # Minimum version of the PowerShell engine required by this module
     PowerShellVersion = '7.4'
@@ -90,19 +90,19 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @('Windows', 'Linux', 'MacOS', 'AvaloniaUI', 'GUI')
+            Tags = @('Windows', 'Linux', 'MacOS', 'GUI')
 
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/mdgrs-mei/AvaloniaUIShell/blob/main/LICENSE'
+            LicenseUri = 'https://github.com/mdgrs-mei/GliderUI/blob/main/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/mdgrs-mei/AvaloniaUIShell'
+            ProjectUri = 'https://github.com/mdgrs-mei/GliderUI'
 
             # A URL to an icon representing this module.
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/mdgrs-mei/AvaloniaUIShell/blob/main/CHANGELOG.md'
+            ReleaseNotes = 'https://github.com/mdgrs-mei/GliderUI/blob/main/CHANGELOG.md'
 
             # Prerelease string of this module
             # Prerelease = 'alpha'
