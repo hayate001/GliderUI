@@ -374,7 +374,7 @@ internal class ObjectDef
 
             foreach (var property in _staticProperties)
             {
-                if (!property.IsSupported())
+                if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                     continue;
 
                 codeWriter.Append($$"""
@@ -403,7 +403,7 @@ internal class ObjectDef
 
             foreach (var property in _instanceProperties)
             {
-                if (!property.IsSupported())
+                if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                     continue;
 
                 codeWriter.Append($$"""
@@ -585,7 +585,7 @@ internal class ObjectDef
 
         foreach (var property in _staticProperties)
         {
-            if (!property.IsSupported())
+            if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                 continue;
 
             codeWriter.Append($$"""
@@ -619,7 +619,7 @@ internal class ObjectDef
 
         foreach (var property in _instanceProperties)
         {
-            if (!property.IsSupported())
+            if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                 continue;
 
             codeWriter.Append($$"""
@@ -811,7 +811,8 @@ internal class ObjectDef
         }
 
         SignatureStore signatureStore = new();
-        string rootClassName = $"{className}{genericArgumentsExpression}";
+        var ns = Generator.GetTargetNamespace(_apiObjectDef.Namespace);
+        string rootClassName = $"{ns}.{className}{genericArgumentsExpression}";
         GenerateInterfaceImplBody(codeWriter, rootClassName, Type.GenericArguments, signatureStore);
 
         codeWriter.DecrementIndent();
@@ -823,12 +824,19 @@ internal class ObjectDef
         if (signatureStore.ContainsObject(this))
             return;
 
+        string typeName = Type.OverrideGenericTypeParameter(genericTypeParametersOverride).GetName();
+        string typeNameExpression = $"ObjectTypeMapping.Get().GetTargetTypeName(typeof({typeName}))";
+
         foreach (var property in _staticProperties)
         {
             if (!property.IsSupported())
                 continue;
 
             bool isExplicit = signatureStore.ContainsSignature(property);
+
+            if (AttributeGenerator.IsSurpressed(rootClassName, property, isExplicit))
+                continue;
+
             TypeDef propertyType = property.Type.OverrideGenericTypeParameter(genericTypeParametersOverride);
 
             codeWriter.Append($$"""
@@ -841,7 +849,7 @@ internal class ObjectDef
             {
                 codeWriter.Append($$"""
                     get => PropertyAccessor.GetStatic<{{propertyType.GetName()}}>(
-                        ObjectTypeMapping.Get().GetTargetTypeName(typeof({{rootClassName}})),
+                        {{typeNameExpression}},
                         {{property.GetNameOfExpression()}}){{(property.Type.IsNullable ? "" : "!")}};
                     """);
             }
@@ -850,7 +858,7 @@ internal class ObjectDef
             {
                 codeWriter.Append($$"""
                     set => PropertyAccessor.SetStatic(
-                        ObjectTypeMapping.Get().GetTargetTypeName(typeof({{rootClassName}})),
+                        {{typeNameExpression}},
                         {{property.GetNameOfExpression()}},
                         value);
                     """);
@@ -866,6 +874,10 @@ internal class ObjectDef
                 continue;
 
             bool isExplicit = signatureStore.ContainsSignature(property);
+
+            if (AttributeGenerator.IsSurpressed(rootClassName, property, isExplicit))
+                continue;
+
             TypeDef propertyType = property.Type.OverrideGenericTypeParameter(genericTypeParametersOverride);
 
             codeWriter.Append($$"""
@@ -881,8 +893,8 @@ internal class ObjectDef
                     codeWriter.Append($$"""
                         get => PropertyAccessor.GetIndexer<{{propertyType.GetName()}}>(
                             GliderUIObjectId,
-                            null,
-                            "{{property.GetOriginalName(isExplicit)}}"{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride)}}){{(propertyType.IsNullable ? "" : "!")}};
+                            {{typeNameExpression}},
+                            "{{property.GetOriginalName(isExplicit, addInterfaceName: false)}}"{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride)}}){{(propertyType.IsNullable ? "" : "!")}};
                         """);
                 }
                 else
@@ -890,8 +902,8 @@ internal class ObjectDef
                     codeWriter.Append($$"""
                         get => PropertyAccessor.Get<{{propertyType.GetName()}}>(
                             GliderUIObjectId,
-                            null,
-                            {{property.GetNameOfExpression(isExplicit)}}){{(propertyType.IsNullable ? "" : "!")}};
+                            {{typeNameExpression}},
+                            {{property.GetNameOfExpression(isExplicit, addInterfaceName: false)}}){{(propertyType.IsNullable ? "" : "!")}};
                         """);
                 }
             }
@@ -903,8 +915,8 @@ internal class ObjectDef
                     codeWriter.Append($$"""
                         set => PropertyAccessor.SetIndexer(
                             GliderUIObjectId,
-                            null,
-                            "{{property.GetOriginalName(isExplicit)}}", {{propertyType.GetValueExpression()}}{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride)}});
+                            {{typeNameExpression}},
+                            "{{property.GetOriginalName(isExplicit, addInterfaceName: false)}}", {{propertyType.GetValueExpression()}}{{property.GetIndexerArgumentsExpression(genericTypeParametersOverride)}});
                         """);
                 }
                 else
@@ -912,8 +924,8 @@ internal class ObjectDef
                     codeWriter.Append($$"""
                         set => PropertyAccessor.Set(
                             GliderUIObjectId,
-                            null,
-                            {{property.GetNameOfExpression(isExplicit)}}, {{propertyType.GetValueExpression()}});
+                            {{typeNameExpression}},
+                            {{property.GetNameOfExpression(isExplicit, addInterfaceName: false)}}, {{propertyType.GetValueExpression()}});
                         """);
                 }
             }
@@ -939,8 +951,8 @@ internal class ObjectDef
                     {{method.GetInterfaceImplSignatureExpression(isExplicit, genericTypeParametersOverride)}}
                     {
                         CommandClient.Get().InvokeStaticMethod(
-                            ObjectTypeMapping.Get().GetTargetTypeName(typeof({{rootClassName}})),
-                            {{method.GetNameOfExpression(isExplicit)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}});
+                            {{typeNameExpression}},
+                            {{method.GetNameOfExpression(isExplicit, addInterfaceName: false)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}});
                     }
                     """);
             }
@@ -950,8 +962,8 @@ internal class ObjectDef
                     {{method.GetInterfaceImplSignatureExpression(isExplicit, genericTypeParametersOverride)}}
                     {
                         return CommandClient.Get().InvokeStaticMethodAndGetResult<{{returnType.GetName()}}>(
-                            ObjectTypeMapping.Get().GetTargetTypeName(typeof({{rootClassName}})),
-                            {{method.GetNameOfExpression(isExplicit)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}}){{(returnType.IsNullable ? "" : "!")}};
+                            {{typeNameExpression}},
+                            {{method.GetNameOfExpression(isExplicit, addInterfaceName: false)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}}){{(returnType.IsNullable ? "" : "!")}};
                     }
                     """);
             }
@@ -979,8 +991,8 @@ internal class ObjectDef
                     {
                         CommandClient.Get().InvokeMethod(
                             GliderUIObjectId,
-                            null,
-                            {{method.GetNameOfExpression(isExplicit)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}});
+                            {{typeNameExpression}},
+                            {{method.GetNameOfExpression(isExplicit, addInterfaceName: false)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}});
                     }
                     """);
             }
@@ -991,8 +1003,8 @@ internal class ObjectDef
                     {
                         return CommandClient.Get().InvokeMethodAndGetResult<{{returnType.GetName()}}>(
                             GliderUIObjectId,
-                            null,
-                            {{method.GetNameOfExpression(isExplicit)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}}){{(returnType.IsNullable ? "" : "!")}};
+                            {{typeNameExpression}},
+                            {{method.GetNameOfExpression(isExplicit, addInterfaceName: false)}}{{method.GetArgumentsExpression(genericTypeParametersOverride)}}){{(returnType.IsNullable ? "" : "!")}};
                     }
                     """);
             }
@@ -1035,7 +1047,7 @@ internal class ObjectDef
 
             codeWriter.AppendAndReserveNewLine(
                 eventDef.GetInterfaceImplEventCallbackMethodExpression(
-                    rootClassName,
+                    typeName,
                     isExplicit,
                     genericTypeParametersOverride));
         }

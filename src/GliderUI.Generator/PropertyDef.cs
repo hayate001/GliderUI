@@ -4,7 +4,6 @@ namespace GliderUI.Generator;
 
 internal class PropertyDef
 {
-    private readonly ObjectDef _objectDef;
     private readonly MemberDefType _memberDefType;
     private readonly List<ParameterDef>? _indexParameters;
     private readonly bool _hidesBase;
@@ -13,6 +12,7 @@ internal class PropertyDef
     private readonly bool _isAbstract;
     private readonly string _propertyName;
 
+    public readonly ObjectDef ObjectDef;
     public readonly TypeDef Type;
     public readonly TypeDef? ExplicitInterfaceType;
     public bool CanRead { get; private set; }
@@ -42,7 +42,7 @@ internal class PropertyDef
         CanWrite = apiPropertyDef.CanWrite;
         ImplementsInterface = apiPropertyDef.ImplementsInterface;
 
-        _objectDef = objectDef;
+        ObjectDef = objectDef;
         _memberDefType = memberDefType;
 
         bool useSystemInterfaceName = apiPropertyDef.ImplementsGlobalSystemInterface;
@@ -82,7 +82,7 @@ internal class PropertyDef
         CanWrite = setter is not null;
         ImplementsInterface = getter.ImplementsInterface;
 
-        _objectDef = objectDef;
+        ObjectDef = objectDef;
         _memberDefType = memberDefType;
 
         bool useSystemInterfaceName = getter!.ImplementsGlobalSystemInterface;
@@ -138,7 +138,7 @@ internal class PropertyDef
         }
         else if (isInterfaceImplExplicitImplementation)
         {
-            interfaceType = _objectDef.Type;
+            interfaceType = ObjectDef.Type;
         }
 
         if (interfaceType is not null)
@@ -154,26 +154,29 @@ internal class PropertyDef
         return $"{interfaceTypeName}{name}";
     }
 
-    public string GetOriginalName(bool isInterfaceImplExplicitImplementation = false)
+    public string GetOriginalName(bool isInterfaceImplExplicitImplementation = false, bool addInterfaceName = true)
     {
         string interfaceTypeName = "";
-        if (ExplicitInterfaceType is not null)
+        if (addInterfaceName)
         {
-            interfaceTypeName = $"{ExplicitInterfaceType.GetOriginalName()}.";
-        }
-        else if (isInterfaceImplExplicitImplementation)
-        {
-            interfaceTypeName = $"{_objectDef.Type.GetOriginalName()}.";
+            if (ExplicitInterfaceType is not null)
+            {
+                interfaceTypeName = $"{ExplicitInterfaceType.GetOriginalName()}.";
+            }
+            else if (isInterfaceImplExplicitImplementation)
+            {
+                interfaceTypeName = $"{ObjectDef.Type.GetOriginalName()}.";
+            }
         }
 
         return $"{interfaceTypeName}{_propertyName}";
     }
 
-    public string GetNameOfExpression(bool isInterfaceImplExplicitImplementation = false)
+    public string GetNameOfExpression(bool isInterfaceImplExplicitImplementation = false, bool addInterfaceName = true)
     {
         if (ExplicitInterfaceType is not null || isInterfaceImplExplicitImplementation)
         {
-            return $"\"{GetOriginalName(isInterfaceImplExplicitImplementation)}\"";
+            return $"\"{GetOriginalName(isInterfaceImplExplicitImplementation, addInterfaceName)}\"";
         }
         else
         {
@@ -196,7 +199,7 @@ internal class PropertyDef
     public string GetSignatureExpression()
     {
         string unsafeExpression = Type.IsUnsafe() ? "unsafe " : "";
-        string accessorExpression = (_objectDef.Type.IsInterface || ExplicitInterfaceType is not null) ? "" : "public ";
+        string accessorExpression = (ObjectDef.Type.IsInterface || ExplicitInterfaceType is not null) ? "" : "public ";
         string staticExpression = _memberDefType == MemberDefType.Static ? "static " : "";
         string newExpression = (_hidesBase && ExplicitInterfaceType is null) ? "new " : "";
         string overrideExpression = _isOverride ? "override " : "";
