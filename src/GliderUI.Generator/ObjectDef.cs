@@ -374,7 +374,7 @@ internal class ObjectDef
 
             foreach (var property in _staticProperties)
             {
-                if (!property.IsSupported())
+                if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                     continue;
 
                 codeWriter.Append($$"""
@@ -403,7 +403,7 @@ internal class ObjectDef
 
             foreach (var property in _instanceProperties)
             {
-                if (!property.IsSupported())
+                if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                     continue;
 
                 codeWriter.Append($$"""
@@ -585,7 +585,7 @@ internal class ObjectDef
 
         foreach (var property in _staticProperties)
         {
-            if (!property.IsSupported())
+            if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                 continue;
 
             codeWriter.Append($$"""
@@ -619,7 +619,7 @@ internal class ObjectDef
 
         foreach (var property in _instanceProperties)
         {
-            if (!property.IsSupported())
+            if (!property.IsSupported() || AttributeGenerator.IsSurpressed(property))
                 continue;
 
             codeWriter.Append($$"""
@@ -811,7 +811,8 @@ internal class ObjectDef
         }
 
         SignatureStore signatureStore = new();
-        string rootClassName = $"{className}{genericArgumentsExpression}";
+        var ns = Generator.GetTargetNamespace(_apiObjectDef.Namespace);
+        string rootClassName = $"{ns}.{className}{genericArgumentsExpression}";
         GenerateInterfaceImplBody(codeWriter, rootClassName, Type.GenericArguments, signatureStore);
 
         codeWriter.DecrementIndent();
@@ -832,6 +833,10 @@ internal class ObjectDef
                 continue;
 
             bool isExplicit = signatureStore.ContainsSignature(property);
+
+            if (AttributeGenerator.IsSurpressed(rootClassName, property, isExplicit))
+                continue;
+
             TypeDef propertyType = property.Type.OverrideGenericTypeParameter(genericTypeParametersOverride);
 
             codeWriter.Append($$"""
@@ -869,6 +874,10 @@ internal class ObjectDef
                 continue;
 
             bool isExplicit = signatureStore.ContainsSignature(property);
+
+            if (AttributeGenerator.IsSurpressed(rootClassName, property, isExplicit))
+                continue;
+
             TypeDef propertyType = property.Type.OverrideGenericTypeParameter(genericTypeParametersOverride);
 
             codeWriter.Append($$"""

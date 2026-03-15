@@ -16,10 +16,17 @@ public class Generator : IIncrementalGenerator
             return text.Path.EndsWith("Api.xml");
         }).Collect();
 
-        var attributesProvider = context.SyntaxProvider.ForAttributeWithMetadataName(
+        var methodAttributesProvider = context.SyntaxProvider.ForAttributeWithMetadataName(
             AttributeGenerator.SurpressMethodByNameAttributeFullName,
             (syntaxNode, cancellationToken) => true,
             (generatorAttributeSyntaxContext, cancellationToken) => generatorAttributeSyntaxContext).Collect();
+
+        var prropertyAttributesProvider = context.SyntaxProvider.ForAttributeWithMetadataName(
+            AttributeGenerator.SurpressPropertyByNameAttributeFullName,
+            (syntaxNode, cancellationToken) => true,
+            (generatorAttributeSyntaxContext, cancellationToken) => generatorAttributeSyntaxContext).Collect();
+
+        var attributesProvider = methodAttributesProvider.Combine(prropertyAttributesProvider);
 
         var provider = additionalTextsProvider.Combine(context.AnalyzerConfigOptionsProvider).Combine(attributesProvider);
 
@@ -41,8 +48,11 @@ public class Generator : IIncrementalGenerator
             }
             else
             {
-                var surpressMethodByNameAttributes = providers.Right;
-                AttributeGenerator.InitSurpressDictionary(surpressMethodByNameAttributes);
+                var surpressMethodByNameAttributes = providers.Right.Left;
+                var surpressPropertyByNameAttributes = providers.Right.Right;
+                AttributeGenerator.InitSurpressDictionary(
+                    surpressMethodByNameAttributes,
+                    surpressPropertyByNameAttributes);
 
                 EnumGenerator.Generate(sourceProductionContext, api);
                 ObjectGenerator.Generate(sourceProductionContext, api);
